@@ -13,14 +13,15 @@ const fs = require('fs');
 const assert = require('assert');
 
 const EXAMPLE_MNEMONIC = "equip will roof matter pink blind book anxiety banner elbow sun young";
-const EXAMPLE_CBOR_TX = "89005501fd1d0f4dfcd7e99afcb99a8326b7dc459d32c62855011eaf1c8a4bbfeeb0870b1745b1f57503470b71160144000186a0430009c41961a80040";
+const EXAMPLE_CBOR_TX = "8a005501fd1d0f4dfcd7e99afcb99a8326b7dc459d32c62855011eaf1c8a4bbfeeb0870b1745b1f57503470b71160144000186a01961a8430009c4430009c40040";
 const EXAMPLE_ADDRESS_MAINNET = "f1rovwtiuo5ncslpmpjftzu5akswbgsgighjazxoi";
 const EXAMPLE_TRANSACTION = {
     "to": "t17uoq6tp427uzv7fztkbsnn64iwotfrristwpryy",
     "from": "t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba",
     "nonce": 1,
     "value": "100000",
-    "gasprice": "2500",
+    "gaspremium": "2500",
+    "gasfeecap": "2500",
     "gaslimit": 25000,
     "method": 0,
     "params": ""
@@ -31,7 +32,8 @@ const EXAMPLE_TRANSACTION_MAINNET = {
     "from": "f1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba",
     "nonce": 1,
     "value": "100000",
-    "gasprice": "2500",
+    "gaspremium": "2500",
+    "gasfeecap": "2500",
     "gaslimit": 25000,
     "method": 0,
     "params": ""
@@ -218,7 +220,8 @@ describe("transactionSerialize", function() {
         from: "t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba",
         nonce: 1,
         value: "100000",
-        gasprice: "2500",
+        gaspremium: "2500",
+        gasfeecap: "2500",
         gaslimit: 25000,
         method: 7,
         params: Buffer.from(serialized_params).toString('base64')
@@ -307,7 +310,8 @@ describe("transactionSignLotus", function() {
       "Message": {
         "From": "t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba",
         "GasLimit": 25000,
-        "GasPrice": "2500",
+        "GasFeeCap": "2500",
+        "GasPremium": "2500",
         "Method": 0,
         "Nonce": 1,
         "Params": "",
@@ -315,7 +319,7 @@ describe("transactionSignLotus", function() {
         "Value": "100000"
       },
       "Signature": {
-        "Data": "BjmEhQYMoqTeuXAn9Rj0VWk2DDhzpDA5JvppCacpnUxViDRjEgg2NY/zOWiC7g3CzxWWG9SVzfs94e4ui9N2jgE=",
+        "Data": "d4GDYWVIVl6zIXHShMppaVcJMvF1vumkCpsV7HlHRJM7Z59LY2tgV05ttNnqMIgwe4qL4sLIsrAuih1LdnwtSgE=",
         "Type": 1
       }
     }));
@@ -397,7 +401,8 @@ describeCall("createMultisig", function() {
       from: recoveredKey.address,
       nonce: 1,
       value: '1000',
-      gasprice: '1',
+      gasfeecap: '1',
+      gaspremium: '1',
       gaslimit: 1000000,
       method: 2,
       params: Buffer.from(filecoin_signer.serializeParams(exec_params)).toString('base64')
@@ -437,7 +442,8 @@ describeCall("createMultisig", function() {
       from: recoveredKey.address,
       nonce: 1,
       value: '1000',
-      gasprice: '1',
+      gaspremium: '1',
+      gasfeecap: '1',
       gaslimit: 1000000,
       method: 2,
       params: Buffer.from(filecoin_signer.serializeParams(exec_params)).toString('base64')
@@ -488,7 +494,8 @@ describeCall("createMultisig", function() {
       "Message":{
         "From":recoveredKey.address,
         "GasLimit":1000000,
-        "GasPrice":"1",
+        "GasPremium":"1",
+        "GasFeeCap":"1",
         "Method":2,
         "Nonce":1,
         "Params":"gtgqUwABVQAOZmlsLzEvbXVsdGlzaWdYMIOCVQHf5JGE1Grcj4nURji+tF94/K0lkFUBHq8ciku/7rCHCxdFsfV1A0cLcRYBAA==",
@@ -537,7 +544,8 @@ describeCall("proposeMultisig", function() {
       from: recoveredKey.address,
       nonce: 1,
       value: '0',
-      gasprice: '1',
+      gaspremium: '1',
+      gasfeecap: '1',
       gaslimit: 1000000,
       method: 2,
       params: params_base64
@@ -587,7 +595,8 @@ describeCall("proposeMultisig", function() {
       "Message":{
         "From":recoveredKey.address,
         "GasLimit":1000000,
-        "GasPrice":"1",
+        "GasFeeCap":"1",
+        "GasPremium":"1",
         "Method":2,
         "Nonce":1,
         "Params":"hFUB3+SRhNRq3I+J1EY4vrRfePytJZBDAAPoAEA=",
@@ -641,7 +650,8 @@ describeCall("approveMultisig", function() {
       from: recoveredKey.address,
       nonce: 1,
       value: '0',
-      gasprice: '1',
+      gaspremium: '1',
+      gasfeecap: '1',
       gaslimit: 1000000,
       method: 3,
       params: Buffer.from(filecoin_signer.serializeParams(txn_id_params)).toString('base64')
@@ -693,7 +703,8 @@ describeCall("approveMultisig", function() {
       "Message":{
         "From":recoveredKey.address,
         "GasLimit":1000000,
-        "GasPrice":"1",
+        "GasPremium":"1",
+        "GasFeeCap":"1",
         "Method":3,
         "Nonce":1,
         "Params":"ghkE0pggGPoYtBjCGOIYchjjDxjRGN4YixjtGDYYwxiWGDcYwRi+GJQYHhYY3RiSGO0Yrg8YVBi2Bhh8GP8YQhj/",
@@ -747,7 +758,8 @@ describeCall("cancelMultisig", function() {
       from: recoveredKey.address,
       nonce: 1,
       value: '0',
-      gasprice: '1',
+      gaspremium: '1',
+      gasfeecap: '1',
       gaslimit: 1000000,
       method: 4,
       params: Buffer.from(filecoin_signer.serializeParams(txn_id_params)).toString('base64')
@@ -799,7 +811,8 @@ describeCall("cancelMultisig", function() {
       "Message":{
         "From":recoveredKey.address,
         "GasLimit":1000000,
-        "GasPrice":"1",
+        "GasPremium":"1",
+        "GasFeeCap":"1",
         "Method":4,
         "Nonce":1,
         "Params":"ghkE0pggGPoYtBjCGOIYchjjDxjRGN4YixjtGDYYwxiWGDcYwRi+GJQYHhYY3RiSGO0Yrg8YVBi2Bhh8GP8YQhj/",
